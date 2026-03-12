@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1600 802.36902"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg23"
+   sodipodi:docname="cover-c1a4f2d7-stock-recommendation.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   width="1600"
+   height="802.36902"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview23"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.985"
+     inkscape:cx="860.91371"
+     inkscape:cy="422.33503"
+     inkscape:window-width="1440"
+     inkscape:window-height="830"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g24" />
+  <title
+     id="title">Stock recommendation review cover</title>
+  <desc
+     id="desc">An editorial cover showing recommendation cards, a magnifier, and a checklist.</desc>
+  <defs
+     id="defs5">
+    <linearGradient
+       id="bg"
+       x1="0"
+       y1="0"
+       x2="1200"
+       y2="1200"
+       gradientTransform="scale(1.3333333,0.66864085)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#1a2338"
+         id="stop1" />
+      <stop
+         offset="60%"
+         stop-color="#223f58"
+         id="stop2" />
+      <stop
+         offset="100%"
+         stop-color="#f1d4a6"
+         id="stop3" />
+    </linearGradient>
+    <linearGradient
+       id="paper"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#fff7ea"
+         id="stop4" />
+      <stop
+         offset="100%"
+         stop-color="#f0dcc0"
+         id="stop5" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#paper"
+       id="linearGradient24"
+       x1="202.01163"
+       y1="145.78369"
+       x2="691.09241"
+       y2="634.86444"
+       gradientTransform="scale(0.94053994,1.0632191)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#paper"
+       id="linearGradient25"
+       x1="522.96771"
+       y1="148.28831"
+       x2="990.3006"
+       y2="615.62115"
+       gradientTransform="scale(0.89871703,1.1126973)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <rect
+     width="1600"
+     height="802.36902"
+     fill="url(#bg)"
+     id="rect5"
+     style="fill:url(#bg);stroke-width:0.944204"
+     x="0"
+     y="0" />
+  <circle
+     cx="1310"
+     cy="111.18451"
+     r="180"
+     fill="#ffffff"
+     opacity="0.08"
+     id="circle5" />
+  <circle
+     cx="240"
+     cy="711.18451"
+     r="230"
+     fill="#7ee7c1"
+     opacity="0.1"
+     id="circle6" />
+  <g
+     id="g24"
+     transform="translate(10,-37.315491)">
+    <path
+       d="m 214,205 409,-56 59,484 -409,56 z"
+       fill="#07131e"
+       opacity="0.16"
+       id="path6" />
+    <path
+       d="m 190,185 420,-30 40,490 -420,30 z"
+       fill="url(#paper)"
+       id="path7"
+       style="fill:url(#linearGradient24)" />
+    <rect
+       x="490"
+       y="183"
+       width="420"
+       height="520"
+       rx="34"
+       fill="#07131e"
+       opacity="0.16"
+       id="rect7" />
+    <rect
+       x="470"
+       y="165"
+       width="420"
+       height="520"
+       rx="34"
+       fill="url(#paper)"
+       id="rect8"
+       style="fill:url(#linearGradient25)" />
+    <rect
+       x="1000"
+       y="188"
+       width="390"
+       height="540"
+       rx="34"
+       fill="#07131e"
+       opacity="0.16"
+       id="rect9" />
+    <rect
+       x="980"
+       y="170"
+       width="390"
+       height="540"
+       rx="34"
+       fill="#10273a"
+       id="rect10" />
+    <g
+       stroke="#16425a"
+       stroke-width="10"
+       stroke-linecap="round"
+       id="g13">
+      <path
+         d="M 540,270 H 810"
+         id="path10" />
+      <path
+         d="M 540,350 H 780"
+         id="path11" />
+      <path
+         d="M 540,430 H 760"
+         id="path12" />
+      <path
+         d="M 540,510 H 788"
+         id="path13" />
+    </g>
+    <g
+       fill="#7ce2d0"
+       id="g16"
+       style="display:none">
+      <circle
+         cx="590"
+         cy="270"
+         r="16"
+         id="circle13" />
+      <circle
+         cx="590"
+         cy="350"
+         r="16"
+         id="circle14" />
+      <circle
+         cx="590"
+         cy="430"
+         r="16"
+         id="circle15" />
+      <circle
+         cx="590"
+         cy="510"
+         r="16"
+         id="circle16" />
+    </g>
+    <g
+       id="g17">
+      <circle
+         cx="700"
+         cy="450"
+         r="122"
+         fill="none"
+         stroke="#75d6ff"
+         stroke-width="22"
+         id="circle17" />
+      <path
+         d="m 791.04188,542.04188 92.06853,92.06853"
+         fill="none"
+         stroke="#75d6ff"
+         stroke-width="25.7792"
+         stroke-linecap="round"
+         id="path17" />
+    </g>
+    <g
+       fill="#16425a"
+       id="g19"
+       style="display:inline">
+      <rect
+         x="1040"
+         y="270"
+         width="255"
+         height="68"
+         rx="16"
+         opacity="0.18"
+         id="rect17" />
+      <rect
+         x="1040"
+         y="395"
+         width="255"
+         height="68"
+         rx="16"
+         opacity="0.18"
+         id="rect18" />
+      <rect
+         x="1040"
+         y="520"
+         width="255"
+         height="68"
+         rx="16"
+         opacity="0.18"
+         id="rect19" />
+    </g>
+    <g
+       fill="none"
+       stroke="#7ee7c1"
+       stroke-width="12"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="g21"
+       inkscape:label="g21">
+      <path
+         d="m 1080,302 30,30 56,-60"
+         id="path19" />
+      <path
+         d="m 1080,427 30,30 56,-60"
+         id="path20" />
+      <path
+         d="m 1080,552 30,30 56,-60"
+         id="path21" />
+    </g>
+    <g
+       id="g23"
+       style="display:inline">
+      <circle
+         cx="365"
+         cy="455"
+         r="70"
+         fill="#f3c98f"
+         id="circle21" />
+      <path
+         d="m 281.45178,423.48223 c 26,-48 75,-68 120,-59"
+         fill="none"
+         stroke="#1d384d"
+         stroke-width="14"
+         stroke-linecap="round"
+         id="path22"
+         style="display:none" />
+      <path
+         d="m 296.7868,516.09137 c 39,38 100,38 143,-7"
+         fill="none"
+         stroke="#1d384d"
+         stroke-width="14"
+         stroke-linecap="round"
+         id="path23"
+         style="display:none" />
+    </g>
+  </g>
+</svg>

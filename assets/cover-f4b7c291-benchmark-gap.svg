@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1365 811.47217"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg22"
+   sodipodi:docname="cover-f4b7c291-benchmark-gap.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   width="1365"
+   height="811.47217"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview22"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.4046529"
+     inkscape:cx="417.64188"
+     inkscape:cy="521.43454"
+     inkscape:window-width="1440"
+     inkscape:window-height="830"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg22" />
+  <title
+     id="title">Benchmark gap chart cover</title>
+  <desc
+     id="desc">A dark chart panel over a blue to warm gradient background with benchmark and investor return lines.</desc>
+  <defs
+     id="defs7">
+    <linearGradient
+       id="bg"
+       x1="0"
+       y1="0"
+       x2="1182.269"
+       y2="1182.269"
+       gradientTransform="scale(1.1545596,0.86613114)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#153153"
+         id="stop1" />
+      <stop
+         offset="52%"
+         stop-color="#315678"
+         id="stop2" />
+      <stop
+         offset="100%"
+         stop-color="#f0c38d"
+         id="stop3" />
+    </linearGradient>
+    <radialGradient
+       id="warmGlow"
+       cx="1182.269"
+       cy="1182.269"
+       r="532.02106"
+       gradientTransform="scale(1.1545596,0.86613114)"
+       fx="1182.269"
+       fy="1182.269"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#f2c58a"
+         stop-opacity="0.52"
+         id="stop4" />
+      <stop
+         offset="100%"
+         stop-color="#f2c58a"
+         stop-opacity="0"
+         id="stop5" />
+    </radialGradient>
+    <radialGradient
+       id="card"
+       cx="524.02466"
+       cy="626.50487"
+       r="799.32211"
+       gradientTransform="matrix(1.3548981,0,0,0.7380629,-27.5,-118.76392)"
+       fx="524.02466"
+       fy="626.50487"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#173754"
+         id="stop6" />
+      <stop
+         offset="100%"
+         stop-color="#112b41"
+         id="stop7" />
+    </radialGradient>
+  </defs>
+  <g
+     id="g22"
+     transform="scale(1,0.7924533)">
+    <rect
+       width="1365"
+       height="1024"
+       fill="url(#bg)"
+       id="rect7"
+       x="0"
+       y="0"
+       style="display:inline;fill:url(#bg)" />
+    <rect
+       width="1365"
+       height="1024"
+       fill="url(#warmGlow)"
+       id="rect8"
+       style="fill:url(#warmGlow)"
+       x="0"
+       y="0" />
+  </g>
+  <circle
+     cx="1284"
+     cy="122.73609"
+     r="173"
+     fill="#cad6e2"
+     opacity="0.16"
+     id="circle8" />
+  <circle
+     cx="98"
+     cy="735.73608"
+     r="204"
+     fill="#6a9ea1"
+     opacity="0.12"
+     id="circle9" />
+  <rect
+     x="158"
+     y="125.73609"
+     width="1140"
+     height="621"
+     rx="35"
+     fill="#102235"
+     opacity="0.2"
+     id="rect9" />
+  <rect
+     x="112.5"
+     y="95.236084"
+     width="1140"
+     height="621"
+     rx="35"
+     fill="url(#card)"
+     id="rect10"
+     style="fill:url(#card)" />
+  <g
+     id="g23"
+     transform="translate(-29,-18.500006)">
+    <g
+       stroke="#466f93"
+       stroke-width="4"
+       stroke-linecap="round"
+       opacity="0.95"
+       id="g20"
+       transform="translate(0,-106.26391)">
+      <path
+         d="m 216,334 h 991"
+         id="path10" />
+      <path
+         d="m 216,430 h 991"
+         id="path11" />
+      <path
+         d="m 216,526 h 991"
+         id="path12" />
+      <path
+         d="m 216,622 h 991"
+         id="path13" />
+      <path
+         d="m 216,718 h 991"
+         id="path14" />
+      <path
+         d="M 314,295 V 766"
+         id="path15" />
+      <path
+         d="M 491,295 V 766"
+         id="path16" />
+      <path
+         d="M 668,295 V 766"
+         id="path17" />
+      <path
+         d="M 845,295 V 766"
+         id="path18" />
+      <path
+         d="M 1022,295 V 766"
+         id="path19" />
+      <path
+         d="M 1199,295 V 766"
+         id="path20" />
+    </g>
+    <path
+       d="m 220.45021,528.1965 106.38608,-58.93688 129.89661,2.55082 134.61272,-165.16101 109.12813,37.1519 124.04111,-33.61313 147.95693,5.97024 128.04771,-91.58934 96.4262,49.84419"
+       fill="none"
+       stroke="#efc38e"
+       stroke-width="10.9004"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path21"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       d="m 220.47722,535.28249 99.50283,-18.2574 136.01763,9.1287 134.94821,-70.62339 115.17818,57.06043 133.27902,-108.76163 143.9661,76.58958 136.93051,-134.11968 80.3326,79.85572"
+       fill="none"
+       stroke="#91d7cb"
+       stroke-width="10.9544"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path22"
+       sodipodi:nodetypes="ccccccccc" />
+  </g>
+</svg>

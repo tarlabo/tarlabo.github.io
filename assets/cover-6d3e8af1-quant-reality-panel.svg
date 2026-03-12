@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1536 852.75085"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg40"
+   sodipodi:docname="cover-6d3e8af1-quant-reality-panel.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   width="1536"
+   height="852.75085"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview40"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.28613281"
+     inkscape:cx="363.46758"
+     inkscape:cy="733.92491"
+     inkscape:window-width="1440"
+     inkscape:window-height="830"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g43" />
+  <title
+     id="title">Quant investing cover with chart and control panel</title>
+  <desc
+     id="desc">An editorial cover with a dark chart card on the left and a cream control panel on the right.</desc>
+  <defs
+     id="defs6">
+    <linearGradient
+       id="bg"
+       x1="0"
+       y1="0"
+       x2="1254.1387"
+       y2="1254.1387"
+       gradientTransform="scale(1.2247449,0.81649658)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#173968"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#153763"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       id="chartCard"
+       x1="171.33095"
+       y1="290.89899"
+       x2="694.94916"
+       y2="814.51715"
+       gradientTransform="scale(1.038925,0.96253342)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#132f58"
+         id="stop3" />
+      <stop
+         offset="100%"
+         stop-color="#0f2748"
+         id="stop4" />
+    </linearGradient>
+    <linearGradient
+       id="panel"
+       x1="737.69769"
+       y1="299.85181"
+       x2="1277.431"
+       y2="839.58508"
+       gradientTransform="scale(1.0708993,0.93379458)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0%"
+         stop-color="#f1ead9"
+         id="stop5" />
+      <stop
+         offset="100%"
+         stop-color="#efe4cf"
+         id="stop6" />
+    </linearGradient>
+  </defs>
+  <g
+     id="g43"
+     inkscape:label="bg"
+     transform="scale(1,0.83276451)">
+    <rect
+       width="1536"
+       height="1024"
+       fill="url(#bg)"
+       id="rect6"
+       style="fill:url(#bg)"
+       x="0"
+       y="0" />
+    <rect
+       width="1536"
+       height="1024"
+       fill="#ffffff"
+       opacity="0.02"
+       id="rect7"
+       x="0"
+       y="0" />
+  </g>
+  <g
+     id="g47"
+     inkscape:label="lr"
+     transform="translate(-5,-105.62457)">
+    <g
+       id="g46"
+       inkscape:label="r">
+      <rect
+         x="790"
+         y="280"
+         width="578"
+         height="504"
+         rx="36"
+         fill="url(#panel)"
+         id="rect11"
+         inkscape:label="rpanel"
+         style="fill:url(#panel)" />
+      <g
+         id="g44"
+         inkscape:label="rc"
+         transform="translate(-1.25)">
+        <g
+           id="g41"
+           transform="translate(0,16)">
+          <circle
+             cx="938"
+             cy="516"
+             r="92"
+             fill="#102442"
+             opacity="0.08"
+             id="circle25" />
+          <circle
+             cx="938"
+             cy="516"
+             r="84"
+             fill="none"
+             stroke="#13386b"
+             stroke-width="18"
+             id="circle26" />
+          <circle
+             cx="938"
+             cy="516"
+             r="27"
+             fill="#13386b"
+             id="circle27" />
+          <path
+             d="M 938,418 V 614"
+             stroke="#13386b"
+             stroke-width="17"
+             stroke-linecap="round"
+             id="path27" />
+          <path
+             d="m 842,516 h 192"
+             stroke="#13386b"
+             stroke-width="17"
+             stroke-linecap="round"
+             id="path28" />
+          <path
+             d="m 872,448 132,136"
+             stroke="#13386b"
+             stroke-width="17"
+             stroke-linecap="round"
+             id="path29" />
+          <path
+             d="M 872,584 1004,448"
+             stroke="#13386b"
+             stroke-width="17"
+             stroke-linecap="round"
+             id="path30" />
+          <path
+             d="M 938,430 V 602"
+             stroke="#13386b"
+             stroke-width="11"
+             stroke-linecap="round"
+             id="path31" />
+          <path
+             d="m 852,516 h 172"
+             stroke="#13386b"
+             stroke-width="11"
+             stroke-linecap="round"
+             id="path32" />
+        </g>
+        <g
+           id="g42"
+           transform="translate(0,-29)">
+          <g
+             id="g34">
+            <rect
+               x="1085"
+               y="404"
+               width="242"
+               height="84"
+               rx="16"
+               fill="#e2d8c6"
+               id="rect32" />
+            <rect
+               x="1113"
+               y="440"
+               width="160"
+               height="16"
+               rx="8"
+               fill="#bcbcbc"
+               id="rect33" />
+            <rect
+               x="1113"
+               y="440"
+               width="78"
+               height="16"
+               rx="8"
+               fill="#4f8f79"
+               id="rect34" />
+            <circle
+               cx="1185"
+               cy="448"
+               r="22"
+               fill="#8edfc4"
+               id="circle34" />
+          </g>
+          <g
+             id="g37">
+            <rect
+               x="1085"
+               y="519"
+               width="242"
+               height="84"
+               rx="16"
+               fill="#e2d8c6"
+               id="rect35" />
+            <rect
+               x="1113"
+               y="555"
+               width="160"
+               height="16"
+               rx="8"
+               fill="#bcbcbc"
+               id="rect36" />
+            <rect
+               x="1113"
+               y="555"
+               width="102"
+               height="16"
+               rx="8"
+               fill="#e68605"
+               id="rect37" />
+            <circle
+               cx="1209"
+               cy="563"
+               r="22"
+               fill="#ffc65b"
+               id="circle37" />
+          </g>
+          <g
+             id="g40">
+            <rect
+               x="1085"
+               y="634"
+               width="242"
+               height="84"
+               rx="16"
+               fill="#e2d8c6"
+               id="rect38" />
+            <rect
+               x="1113"
+               y="670"
+               width="160"
+               height="16"
+               rx="8"
+               fill="#bcbcbc"
+               id="rect39" />
+            <rect
+               x="1113"
+               y="670"
+               width="45.187714"
+               height="16"
+               rx="8"
+               fill="#4078e0"
+               id="rect40" />
+            <circle
+               cx="1157"
+               cy="678"
+               r="22"
+               fill="#8bb7f3"
+               id="circle40" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g45"
+       inkscape:label="l">
+      <rect
+         x="178"
+         y="280"
+         width="544"
+         height="504"
+         rx="36"
+         fill="url(#chartCard)"
+         id="rect10"
+         inkscape:label="lpanel"
+         style="fill:url(#chartCard)" />
+      <g
+         opacity="0.92"
+         id="g25"
+         transform="translate(8.5,6)"
+         inkscape:label="lc">
+        <g
+           stroke="#4f79a7"
+           stroke-width="4"
+           stroke-linecap="round"
+           id="g18">
+          <path
+             d="M 241,626 H 646"
+             id="path11" />
+          <path
+             d="M 241,554 H 646"
+             id="path12" />
+          <path
+             d="M 241,482 H 646"
+             id="path13" />
+          <path
+             d="M 241,410 H 646"
+             id="path14" />
+          <path
+             d="M 313,338 V 714"
+             id="path15" />
+          <path
+             d="M 402,338 V 714"
+             id="path16" />
+          <path
+             d="M 491,338 V 714"
+             id="path17" />
+          <path
+             d="M 580,338 V 714"
+             id="path18" />
+        </g>
+        <g
+           fill="none"
+           stroke="#97e7ce"
+           stroke-width="14"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           id="g19">
+          <path
+             d="m 248,622 116,-59 59,18 71,-112 87,6 54,-114"
+             id="path19" />
+        </g>
+        <g
+           fill="#97e7ce"
+           id="g24">
+          <circle
+             cx="248"
+             cy="622"
+             r="14"
+             id="circle19" />
+          <circle
+             cx="364"
+             cy="563"
+             r="14"
+             id="circle20" />
+          <circle
+             cx="423"
+             cy="581"
+             r="14"
+             id="circle21" />
+          <circle
+             cx="494"
+             cy="469"
+             r="14"
+             id="circle22" />
+          <circle
+             cx="581"
+             cy="475"
+             r="14"
+             id="circle23" />
+          <circle
+             cx="635"
+             cy="361"
+             r="14"
+             id="circle24" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
