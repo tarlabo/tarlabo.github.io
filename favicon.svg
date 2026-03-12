@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 60 60"
+   role="img"
+   aria-labelledby="title"
+   version="1.1"
+   id="svg25"
+   sodipodi:docname="favicon.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   width="60"
+   height="60"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview25"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="9.15625"
+     inkscape:cx="30.03413"
+     inkscape:cy="30.03413"
+     inkscape:window-width="1440"
+     inkscape:window-height="830"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg25" />
+  <title
+     id="title1">타르라보 파비콘</title>
+  <defs
+     id="defs8">
+    <radialGradient
+       id="bg"
+       cx="32"
+       cy="27.199999"
+       r="34.799999"
+       fx="32"
+       fy="27.199999"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-2,-2)">
+      <stop
+         offset="0"
+         stop-color="#23417a"
+         id="stop1" />
+      <stop
+         offset="1"
+         stop-color="#0f1f56"
+         id="stop2" />
+    </radialGradient>
+    <radialGradient
+       id="bulbGlow"
+       cx="32"
+       cy="25"
+       r="11"
+       fx="32"
+       fy="25"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-2,-2)">
+      <stop
+         offset="0"
+         stop-color="#fff4b2"
+         stop-opacity="0.9"
+         id="stop3" />
+      <stop
+         offset="1"
+         stop-color="#fff4b2"
+         stop-opacity="0"
+         id="stop4" />
+    </radialGradient>
+    <linearGradient
+       id="bulbGlass"
+       x1="28"
+       y1="7"
+       x2="36"
+       y2="24"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-3,-2)">
+      <stop
+         offset="0"
+         stop-color="#fff6bb"
+         id="stop5" />
+      <stop
+         offset="1"
+         stop-color="#f8b52c"
+         id="stop6" />
+    </linearGradient>
+    <linearGradient
+       id="liquid"
+       x1="19"
+       y1="38"
+       x2="45"
+       y2="54"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#54ecf4"
+         id="stop7" />
+      <stop
+         offset="1"
+         stop-color="#1f66ee"
+         id="stop8" />
+    </linearGradient>
+  </defs>
+  <circle
+     cx="30"
+     cy="30"
+     r="30"
+     fill="url(#bg)"
+     id="circle8"
+     style="fill:url(#bg)" />
+  <circle
+     cx="30"
+     cy="23"
+     r="11"
+     fill="url(#bulbGlow)"
+     opacity="0.7"
+     id="circle9"
+     inkscape:label="light"
+     style="fill:url(#bulbGlow)" />
+  <path
+     d="m 30,7 c 5,0 9,4 9,9 0,3 -2,6 -5,8 l -1,3 h -6 l -1,-3 c -3,-2 -5,-5 -5,-8 0,-5 4,-9 9,-9 z"
+     fill="url(#bulbGlass)"
+     id="path9"
+     inkscape:label="bulb"
+     style="fill:url(#bulbGlass)" />
+  <g
+     id="g28"
+     inkscape:label="bulb-in"
+     transform="translate(-2,-2.8737201)">
+    <path
+       d="m 29,22 c 1,-2 2,-2 3,0 1,-2 2,-2 3,0"
+       fill="none"
+       stroke="#fff4d1"
+       stroke-width="1.8"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path11"
+       inkscape:label="bulbm" />
+    <path
+       d="m 28,26 h 8"
+       fill="none"
+       stroke="#fef2cd"
+       stroke-width="1.2"
+       stroke-linecap="round"
+       id="path13" />
+  </g>
+  <g
+     id="g27"
+     inkscape:label="stars"
+     transform="translate(-1.3447099,-6.3686007)">
+    <path
+       d="m 20,13 1,2 2,1 -2,1 -1,2 -1,-2 -2,-1 2,-1 z"
+       fill="#ffd54c"
+       id="path14" />
+    <path
+       d="m 43,11 1,2.5 2.5,1 -2.5,1 -1,2.5 -1,-2.5 -2.5,-1 2.5,-1 z"
+       fill="#ffd54c"
+       id="path15" />
+    <path
+       d="m 17,20 0.7,1.5 1.5,0.7 -1.5,0.7 -0.7,1.5 -0.7,-1.5 -1.5,-0.7 1.5,-0.7 z"
+       fill="#ffd54c"
+       id="path16" />
+  </g>
+  <g
+     id="g26"
+     inkscape:label="flask"
+     style="display:inline"
+     transform="translate(-2,-2)">
+    <path
+       d="m 27,27.5 h 10 c 2,0 3,1.5 2.2,2.7 l -1,1.4 v 6.7 L 46.5,49 c 1.5,2 0.1,5 -2.5,5 H 20 c -2.6,0 -4,-3 -2.5,-5 l 8.3,-10.7 v -6.7 l -1,-1.4 C 24,29 25,27.5 27,27.5 Z"
+       fill="#ffffff"
+       id="path17" />
+    <path
+       d="m 28.8,38.8 c 1.7,-2 2.8,-3.6 3.2,-4.9 0.4,1.3 1.5,2.9 3.2,4.9 l 7.4,9.6 c 0.8,1.1 0,2.6 -1.4,2.6 H 22.8 c -1.4,0 -2.2,-1.5 -1.4,-2.6 z"
+       fill="url(#liquid)"
+       id="path18"
+       style="fill:url(#liquid)" />
+    <path
+       d="m 22.8,42.2 c 4.2,-1.4 14.4,-1.4 18.4,0"
+       fill="none"
+       stroke="#86f5ff"
+       stroke-width="1.6"
+       stroke-linecap="round"
+       id="path19" />
+    <g
+       id="g25"
+       inkscape:label="bubbles">
+      <circle
+         cx="26"
+         cy="47"
+         r="2"
+         fill="#98f4ff"
+         opacity="0.88"
+         id="circle21" />
+      <circle
+         cx="37.799999"
+         cy="46.200001"
+         r="1.6"
+         fill="#d7fcff"
+         opacity="0.82"
+         id="circle22" />
+      <circle
+         cx="33"
+         cy="43.5"
+         r="1.1"
+         fill="#dffeff"
+         opacity="0.75"
+         id="circle23" />
+      <circle
+         cx="28.700001"
+         cy="44.200001"
+         r="0.80000001"
+         fill="#dffeff"
+         opacity="0.7"
+         id="circle24"
+         inkscape:label="circle24" />
+      <circle
+         cx="35.200001"
+         cy="49.400002"
+         r="0.89999998"
+         fill="#9ff7ff"
+         opacity="0.8"
+         id="circle25" />
+    </g>
+  </g>
+</svg>
