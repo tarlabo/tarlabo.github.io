@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="ko"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>파이썬으로 미국채 10년물 금리 인하 기간 전후 주요 지수 수익율 비교 feat 나스닥, S&amp;P 500, 러셀2000 | 타르라보</title><meta name="description" content="목적 금리 인하 기간 혹은 그 주변 기간에 경제, 주가 전망에 대한 이야기가 많다. 이를 통해 과거 미국 주요 지수 통계와 미국채 10년물 금리 통계를 활용하여 수익율을 비교해보자. 유의 통계는 과거의 산물이며 역사는 반복되지 않을 수 있다. 표본이 충분하지 않은 사건의 통계에 과도한 "><link rel="stylesheet" href="/_astro/_..CX4HbTh-.css">
+<link rel="stylesheet" href="/_astro/BaseLayout.B_tWKF_O.css"></head> <body> <div class="site-shell"> <div class="frame"> <header class="site-header"> <div class="brand"> <div class="brand-kicker">Investing Insights</div> <h1 class="brand-title"><a href="/">타르라보</a></h1> <p class="brand-copy">잡동사니 연구실</p> </div> </header>  <article class="panel article-shell prose post-prose"> <div class="meta-row"> <span class="meta-chip">2023-12-17 15:23</span> <span class="meta-chip">투자분석코딩</span> </div> <h1 class="article-title">파이썬으로 미국채 10년물 금리 인하 기간 전후 주요 지수 수익율 비교 feat 나스닥, S&amp;P 500, 러셀2000</h1>   <h2 id="목적">목적</h2>
+<p>금리 인하 기간 혹은 그 주변 기간에 경제, 주가 전망에 대한 이야기가 많다.
+이를 통해 과거 미국 주요 지수 통계와 미국채 10년물 금리 통계를 활용하여 수익율을 비교해보자.</p>
+<h2 id="유의">유의</h2>
+<p>통계는 과거의 산물이며 역사는 반복되지 않을 수 있다.
+표본이 충분하지 않은 사건의 통계에 과도한 의미 부여를 해서는 안된다.</p>
+<h2 id="사용된-코드">사용된 코드</h2>
+<p>아래는 사용된 코드다.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># 미국 국채 10년물 금리 인하 기간에서 주요 인덱스 지수 수익율 비교</span></span>
+<span class="line"><span style="color:#6A737D"># - 유의: 지수에는 배당율이 고려되지 않으므로 실질 수익율 비교시 관련 ETF dividend yield 참고하여 보정할 것</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> distutils.dep_util </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> newer_group</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> logging </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> addLevelName</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> pandas_market_calendars </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> get_calendar</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> tracemalloc </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> start</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> datetime</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> diskcache </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> dc</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> matplotlib.pyplot </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> plt</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> pandas </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> pd</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> pandas_datareader </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> pdr</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> re</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> threading</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> yfinance </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> yf</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> numpy </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> np</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> rich </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> print</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">cache </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> dc.Cache(</span><span style="color:#9ECBFF">".cache"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 기간 내 금리 하락 구간 목록 찾기</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> get_gs10_fall_periods</span><span style="color:#E1E4E8">(start_date, end_date):</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    # FRED 에서 금리 데이터 가져오기 (10년 만기 미국 국채 금리)</span></span>
+<span class="line"><span style="color:#E1E4E8">    gs10 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pdr.get_data_fred(</span><span style="color:#9ECBFF">"GS10"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">start</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">start_date, </span><span style="color:#FFAB70">end</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">end_date)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    periods </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#6A737D">        # ("2023-01-01", "2023-07-01"),</span></span>
+<span class="line"><span style="color:#6A737D">        # ("2023-07-01", "2023-12-14"),</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">    previous_date </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">    previous_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">    fall_start_date </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">    fall_start_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> index, row </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> gs10.iterrows():</span></span>
+<span class="line"><span style="color:#E1E4E8">        date </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> index  </span><span style="color:#6A737D"># .to_pydatetime().date()</span></span>
+<span class="line"><span style="color:#E1E4E8">        rate </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> row[</span><span style="color:#9ECBFF">"GS10"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> previous_rate </span><span style="color:#F97583">is</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">            # 하락 추이</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> rate </span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8"> previous_rate:</span></span>
+<span class="line"><span style="color:#6A737D">                # 하락 초입이면 전 날짜를 시작으로 선정</span></span>
+<span class="line"><span style="color:#F97583">                if</span><span style="color:#E1E4E8"> fall_start_date </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">                    fall_start_date </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> previous_date</span></span>
+<span class="line"><span style="color:#E1E4E8">                    fall_start_rate </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> previous_rate</span></span>
+<span class="line"><span style="color:#6A737D">            # 상승 전환</span></span>
+<span class="line"><span style="color:#F97583">            elif</span><span style="color:#E1E4E8"> rate </span><span style="color:#F97583">></span><span style="color:#E1E4E8"> previous_rate:</span></span>
+<span class="line"><span style="color:#6A737D">                # 하락 초입 시작 날짜가 있으면 그때부터 저번 구간까지가 하락 구간이므로 추가</span></span>
+<span class="line"><span style="color:#F97583">                if</span><span style="color:#E1E4E8"> fall_start_date </span><span style="color:#F97583">is</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">                    # print(f"금리 하락 구간: {fall_start_date} ~ {previous_date} [{fall_start_rate:.2f} -> {previous_rate:.2f}]")</span></span>
+<span class="line"><span style="color:#E1E4E8">                    periods.append((fall_start_date, previous_date))</span></span>
+<span class="line"><span style="color:#E1E4E8">                    fall_start_date </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">                    fall_start_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        previous_date </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> date</span></span>
+<span class="line"><span style="color:#E1E4E8">        previous_rate </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> rate</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    intervals </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pd.IntervalIndex.from_tuples(periods, </span><span style="color:#FFAB70">closed</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"left"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> intervals</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 주가 데이터 측정 기간</span></span>
+<span class="line"><span style="color:#E1E4E8">history_start </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pd.Timestamp(</span><span style="color:#9ECBFF">"1989-12-01"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">history_end </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pd.Timestamp(</span><span style="color:#9ECBFF">"2023-12-15"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 금리 인하 측정 기간</span></span>
+<span class="line"><span style="color:#E1E4E8">fall_check_start </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> history_start</span></span>
+<span class="line"><span style="color:#E1E4E8">fall_check_end </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> history_end</span></span>
+<span class="line"><span style="color:#6A737D"># fall_check_start = pd.Timestamp("1990-01-01")</span></span>
+<span class="line"><span style="color:#6A737D"># fall_check_end = pd.Timestamp("2023-11-01")</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> get_history</span><span style="color:#E1E4E8">(ticker, start_date, end_date):</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    key </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">ticker.ticker</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">@</span><span style="color:#79B8FF">{str</span><span style="color:#E1E4E8">(start_date)</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">~</span><span style="color:#79B8FF">{str</span><span style="color:#E1E4E8">(end_date)</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> cache.get(key)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">key</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> is not cached. so i'll 'try to load from web."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ticker.history(</span><span style="color:#FFAB70">period</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"1d"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">start</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">start_date, </span><span style="color:#FFAB70">end</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">end_date)</span></span>
+<span class="line"><span style="color:#E1E4E8">        cache[key] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> result</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    result.index </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> result.index.tz_localize(</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> result</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> calc_returns</span><span style="color:#E1E4E8">(ticker, intervals, trading_days_in_year</span><span style="color:#F97583">=</span><span style="color:#79B8FF">252</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    # print(f"calc_returns: {ticker.ticker}, {intervals}")</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    alls </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> get_history(ticker, history_start, history_end)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    alls[</span><span style="color:#9ECBFF">"Daily Changes"</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> alls[</span><span style="color:#9ECBFF">"Close"</span><span style="color:#E1E4E8">].pct_change()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    trading_days_in_year </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 252</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> trading_days_in_year </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#F97583"> else</span><span style="color:#E1E4E8"> trading_days_in_year</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    filtered </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> alls[</span></span>
+<span class="line"><span style="color:#E1E4E8">        alls.index.to_series().apply(</span><span style="color:#F97583">lambda</span><span style="color:#E1E4E8"> idx: intervals.contains(idx).any())</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> filtered.empty:</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">ticker.ticker</span><span style="color:#F97583">:6</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> 해당 기간내 필터링된 데이터가 없습니다. ex) 금리 인하 기간이 없습니다."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">        return</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    daily_changes </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> filtered[</span><span style="color:#9ECBFF">"Daily Changes"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    up_count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (daily_changes </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">).sum()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    daily_changes_plus_1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> daily_changes.dropna().apply(</span><span style="color:#F97583">lambda</span><span style="color:#E1E4E8"> x: x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    period_changes_prod </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> daily_changes_plus_1.prod() </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    daily_geomean </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (period_changes_prod </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">**</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(daily_changes_plus_1)) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    monthlized_returns </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ((daily_geomean </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">**</span><span style="color:#79B8FF"> 21</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    annualized_returns </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ((daily_geomean </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">**</span><span style="color:#E1E4E8"> trading_days_in_year) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">ticker.ticker</span><span style="color:#F97583">:6</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> 필터기간 수익율: "</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"P </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">period_changes_prod </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:+9.3f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">% / "</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"D </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">daily_geomean </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:+7.3f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">% / "</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"M </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">monthlized_returns </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:+7.3f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">% / "</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"Y </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">annualized_returns </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:+9.3f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">% | "</span></span>
+<span class="line"><span style="color:#F97583">        f</span><span style="color:#9ECBFF">"거래일수: </span><span style="color:#79B8FF">{len</span><span style="color:#E1E4E8">(daily_changes)</span><span style="color:#F97583">:4</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> -> </span><span style="color:#79B8FF">{len</span><span style="color:#E1E4E8">(daily_changes_plus_1)</span><span style="color:#F97583">:4</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> | 상승일수: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">up_count</span><span style="color:#F97583">:4</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> | 상승비율: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">(up_count</span><span style="color:#F97583">/</span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(daily_changes))</span><span style="color:#F97583">*</span><span style="color:#79B8FF">100</span><span style="color:#F97583">:.2f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">%"</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"[[[ 금리 인하 기간 (및 주위 기간) 주요 인덱스 수익율 비교 ]]]"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"전체 기간: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">history_start</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> ~ </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">history_end</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> offset_interval</span><span style="color:#E1E4E8">(interval, offset, period</span><span style="color:#F97583">=</span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">    left </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> interval.left </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> offset</span></span>
+<span class="line"><span style="color:#E1E4E8">    right </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> interval.right </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> offset </span><span style="color:#F97583">if</span><span style="color:#E1E4E8"> period </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#F97583"> else</span><span style="color:#E1E4E8"> left </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> period</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> pd.Interval(left, right)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> show_graph</span><span style="color:#E1E4E8">(tickers):</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.figure(</span><span style="color:#FFAB70">figsize</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.yscale(</span><span style="color:#9ECBFF">"log"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">base</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> ticker </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> tickers:</span></span>
+<span class="line"><span style="color:#6A737D">        # name = ticker.ticker</span></span>
+<span class="line"><span style="color:#E1E4E8">        name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ticker.info[</span><span style="color:#9ECBFF">"shortName"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">        history </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> get_history(ticker, history_start, history_end)</span></span>
+<span class="line"><span style="color:#E1E4E8">        plt.plot(history.index, history[</span><span style="color:#9ECBFF">"Close"</span><span style="color:#E1E4E8">], </span><span style="color:#FFAB70">label</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">name, </span><span style="color:#FFAB70">linewidth</span><span style="color:#F97583">=</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.title(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{</span><span style="color:#9ECBFF">' vs '</span><span style="color:#E1E4E8">.join(</span><span style="color:#79B8FF">map</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">lambda</span><span style="color:#E1E4E8"> x: x.ticker, tickers))</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> Closing Prices"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.xlabel(</span><span style="color:#9ECBFF">"Date"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.ylabel(</span><span style="color:#9ECBFF">"Price (USD)"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.legend()</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.grid()</span></span>
+<span class="line"><span style="color:#E1E4E8">    plt.show()</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">tickers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"^NDX"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"^IXIC"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"^GSPC"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"^RUT"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">tickers </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> list</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">map</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">lambda</span><span style="color:#E1E4E8"> x: yf.Ticker(x), tickers))</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"#### 티커 설명 ####"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> ticker </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> tickers:</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">ticker.ticker</span><span style="color:#F97583">:&#x3C;6</span><span style="color:#79B8FF">}</span><span style="color:#79B8FF"> {</span><span style="color:#E1E4E8">ticker.info[</span><span style="color:#9ECBFF">'shortName'</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">### 전체 기간</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"#### 주가 수익율 for 전체 기간 ####"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">full_periods </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pd.IntervalIndex.from_tuples(</span></span>
+<span class="line"><span style="color:#E1E4E8">    [(history_start, history_end)], </span><span style="color:#FFAB70">closed</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"left"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> ticker </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> tickers:</span></span>
+<span class="line"><span style="color:#E1E4E8">    calc_returns(ticker, full_periods, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">### 금리 인하 기간 수익율 출력 (기간 오프셋별로 모두 출력)</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> remains</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"#### 주가 수익율 for 10년물 국채 금리 하락기 ####"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    gs10_fall_periods </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> get_gs10_fall_periods(fall_check_start, fall_check_end)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> offset_weeks </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">52</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">+</span><span style="color:#79B8FF">56</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">        period_weeks </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 4</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        offset </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pd.Timedelta(</span><span style="color:#FFAB70">weeks</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">offset_weeks)</span></span>
+<span class="line"><span style="color:#E1E4E8">        period </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> pd.Timedelta(</span><span style="color:#FFAB70">weeks</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">period_weeks)</span></span>
+<span class="line"><span style="color:#6A737D">        # period = None # if 원본 길이에 맞춤</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">">> 오프셋 </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">offset_weeks</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">wk | 기간 </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">period_weeks</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">wk"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        offset_periods </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> gs10_fall_periods.map(</span></span>
+<span class="line"><span style="color:#F97583">            lambda</span><span style="color:#E1E4E8"> interval: offset_interval(interval, </span><span style="color:#FFAB70">offset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">offset, </span><span style="color:#FFAB70">period</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">period)</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> ticker </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> tickers:</span></span>
+<span class="line"><span style="color:#E1E4E8">            calc_returns(ticker, offset_periods, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">t </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> threading.Thread(</span><span style="color:#FFAB70">target</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">remains, </span><span style="color:#FFAB70">args</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#E1E4E8">t.start()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># show_graph(tickers)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">t.join()</span></span></code></pre>
+<h2 id="결과">결과</h2>
+<p>아래는 1989년 12월 1일 부터 2023년 12월 15일 기간으로 돌린 결과다.
+너무 길어서 중간 기간들은 생략하였고 별도의 파일로 첨부하였다.
+설명은 아래에 있다.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>[[[ 금리 인하 기간 (및 주위 기간) 주요 인덱스 수익율 비교 ]]]</span></span>
+<span class="line"><span>전체 기간: 1989-12-01 00:00:00 ~ 2023-12-15 00:00:00</span></span>
+<span class="line"><span>#### 티커 설명 ####</span></span>
+<span class="line"><span>^NDX   NASDAQ 100</span></span>
+<span class="line"><span>^IXIC  NASDAQ Composite</span></span>
+<span class="line"><span>^GSPC  S&#x26;P 500</span></span>
+<span class="line"><span>^RUT   Russell 2000</span></span>
+<span class="line"><span>#### 주가 수익율 for 전체 기간 ####</span></span>
+<span class="line"><span>^NDX   필터기간 수익율: P +7239.871% / D  +0.050% / M  +1.058% / Y   +13.458% | 거래일수: 8575 -> 8574 | 상승일수: 4673 | 상승비율: 54.50%</span></span>
+<span class="line"><span>^IXIC  필터기간 수익율: P +3129.394% / D  +0.041% / M  +0.855% / Y   +10.753% | 거래일수: 8575 -> 8574 | 상승일수: 4705 | 상승비율: 54.87%</span></span>
+<span class="line"><span>^GSPC  필터기간 수익율: P +1246.020% / D  +0.030% / M  +0.639% / Y    +7.940% | 거래일수: 8575 -> 8574 | 상승일수: 4584 | 상승비율: 53.46%</span></span>
+<span class="line"><span>^RUT   필터기간 수익율: P +1087.176% / D  +0.029% / M  +0.608% / Y    +7.543% | 거래일수: 8575 -> 8574 | 상승일수: 4656 | 상승비율: 54.30%</span></span>
+<span class="line"><span>#### 주가 수익율 for 10년물 국채 금리 하락기 ####</span></span>
+<span class="line"><span>>> 오프셋 -52wk | 기간 4wk</span></span>
+<span class="line"><span>^NDX   필터기간 수익율: P  +209.395% / D  +0.072% / M  +1.532% / Y   +20.015% | 거래일수: 1560 -> 1560 | 상승일수:  860 | 상승비율: 55.13%</span></span>
+<span class="line"><span>^IXIC  필터기간 수익율: P  +170.299% / D  +0.064% / M  +1.348% / Y   +17.425% | 거래일수: 1560 -> 1560 | 상승일수:  876 | 상승비율: 56.15%</span></span>
+<span class="line"><span>^GSPC  필터기간 수익율: P   +73.953% / D  +0.035% / M  +0.748% / Y    +9.355% | 거래일수: 1560 -> 1560 | 상승일수:  836 | 상승비율: 53.59%</span></span>
+<span class="line"><span>^RUT   필터기간 수익율: P  +172.374% / D  +0.064% / M  +1.358% / Y   +17.570% | 거래일수: 1560 -> 1560 | 상승일수:  851 | 상승비율: 54.55%</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>>> 오프셋 -24wk | 기간 4wk</span></span>
+<span class="line"><span>^NDX   필터기간 수익율: P    -0.141% / D  -0.000% / M  -0.002% / Y    -0.023% | 거래일수: 1560 -> 1560 | 상승일수:  844 | 상승비율: 54.10%</span></span>
+<span class="line"><span>^IXIC  필터기간 수익율: P    -7.203% / D  -0.005% / M  -0.101% / Y    -1.200% | 거래일수: 1560 -> 1560 | 상승일수:  826 | 상승비율: 52.95%</span></span>
+<span class="line"><span>^GSPC  필터기간 수익율: P   +30.899% / D  +0.017% / M  +0.363% / Y    +4.445% | 거래일수: 1560 -> 1560 | 상승일수:  830 | 상승비율: 53.21%</span></span>
+<span class="line"><span>^RUT   필터기간 수익율: P   -13.550% / D  -0.009% / M  -0.196% / Y    -2.325% | 거래일수: 1560 -> 1560 | 상승일수:  821 | 상승비율: 52.63%</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>>> 오프셋 0wk | 기간 4wk</span></span>
+<span class="line"><span>^NDX   필터기간 수익율: P  +145.801% / D  +0.056% / M  +1.191% / Y   +15.268% | 거래일수: 1595 -> 1595 | 상승일수:  869 | 상승비율: 54.48%</span></span>
+<span class="line"><span>^IXIC  필터기간 수익율: P   +86.478% / D  +0.039% / M  +0.824% / Y   +10.346% | 거래일수: 1595 -> 1595 | 상승일수:  873 | 상승비율: 54.73%</span></span>
+<span class="line"><span>^GSPC  필터기간 수익율: P   +19.617% / D  +0.011% / M  +0.236% / Y    +2.871% | 거래일수: 1595 -> 1595 | 상승일수:  835 | 상승비율: 52.35%</span></span>
+<span class="line"><span>^RUT   필터기간 수익율: P   +14.359% / D  +0.008% / M  +0.177% / Y    +2.142% | 거래일수: 1595 -> 1595 | 상승일수:  848 | 상승비율: 53.17%</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>>> 오프셋 24wk | 기간 4wk</span></span>
+<span class="line"><span>^NDX   필터기간 수익율: P   +75.134% / D  +0.035% / M  +0.745% / Y    +9.312% | 거래일수: 1586 -> 1586 | 상승일수:  856 | 상승비율: 53.97%</span></span>
+<span class="line"><span>^IXIC  필터기간 수익율: P   +42.281% / D  +0.022% / M  +0.468% / Y    +5.763% | 거래일수: 1586 -> 1586 | 상승일수:  858 | 상승비율: 54.10%</span></span>
+<span class="line"><span>^GSPC  필터기간 수익율: P   +19.156% / D  +0.011% / M  +0.232% / Y    +2.824% | 거래일수: 1586 -> 1586 | 상승일수:  816 | 상승비율: 51.45%</span></span>
+<span class="line"><span>^RUT   필터기간 수익율: P   +33.034% / D  +0.018% / M  +0.379% / Y    +4.640% | 거래일수: 1586 -> 1586 | 상승일수:  871 | 상승비율: 54.92%</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>.</span></span>
+<span class="line"><span>>> 오프셋 52wk | 기간 4wk</span></span>
+<span class="line"><span>^NDX   필터기간 수익율: P   +44.716% / D  +0.023% / M  +0.494% / Y    +6.088% | 거래일수: 1576 -> 1576 | 상승일수:  834 | 상승비율: 52.92%</span></span>
+<span class="line"><span>^IXIC  필터기간 수익율: P   +41.617% / D  +0.022% / M  +0.465% / Y    +5.721% | 거래일수: 1576 -> 1576 | 상승일수:  846 | 상승비율: 53.68%</span></span>
+<span class="line"><span>^GSPC  필터기간 수익율: P   +11.599% / D  +0.007% / M  +0.146% / Y    +1.770% | 거래일수: 1576 -> 1576 | 상승일수:  807 | 상승비율: 51.21%</span></span>
+<span class="line"><span>^RUT   필터기간 수익율: P    +7.588% / D  +0.005% / M  +0.098% / Y    +1.176% | 거래일수: 1576 -> 1576 | 상승일수:  863 | 상승비율: 54.76%</span></span></code></pre>
+<h2 id="설명">설명</h2>
+<p>미국채 10년물 금리 인하 기간 및 주변 기간 별로 각 인덱스의 수익율을 보여준다.</p>
+<p>결과에 사용된 조회 기간은 다음과 같다. 코드에서 수정 가능하다.</p>
+<p><strong>1989-12-0 ~ 2023-12-15</strong></p>
+<p>수익율 조회에 사용된 인덱스 지수는 다음과 같다. 코드에서 쉽게 수정 가능하다.
+티커명은 야후! 파이낸셜에서 사용되는 이름을 따른다.
+관련 ETF 티커를 사용해도 되지만 ETF 상장이 늦은 경우 조회 기간을 충분히 넓힐 수 없다.</p>
+<p><strong>^NDX - NASDAQ 100 (나스닥 상위 100개 기업) - 관련 ETF: QQQ</strong></p>
+<p><strong>^IXIC - NASDAQ Composite (나스닥 종합 지수) - 관련 ETF: ONEQ</strong></p>
+<p><strong>^GSPC - S&#x26;P 500 (미국 상위 500개 기업) - 관련 ETF: SPY</strong></p>
+<p><strong>^RUT - Russell 2000 (소형주 2000개 기업) - 관련 ETF: IWM</strong></p>
+<p><strong>미국채 10년물 금리는 FRED</strong> 를 통해 구하였고 pandas 를 통해 조회 가능하다.</p>
+<p>아래는 필터기간 수익율에 대한 설명이다.
+오프셋 - 해당 필터기간은 모든 금리 하락 기간 시작점에서 얼마나 더했는지를 말해준다.
+기간 - 해당 필터기간의 길이를 말해준다.</p>
+<p>즉 필터기간의 범위는</p>
+<p><strong>시작: 금리하락 시점 + 오프셋</strong></p>
+<p><strong>끝: 금리하락 시점 + 오프셋 + 기간까지 조회된다.</strong></p>
+<p><strong>P - 해당 필터기간 총 수익율을 말한다.</strong></p>
+<p><strong>D - 해당 필터기간 일일 평균 수익율을 말한다.</strong></p>
+<p><strong>M - D 를 월간 수익율로 환산한 값이다. (월 평균 거래일수 21일 이용)</strong></p>
+<p><strong>Y - D 를 연간 수익율로 환산한 값이다. (연 평균 거래일수 252일 이용)</strong></p>
+<p>거래일수 - 해당 필터기간의 총 일수를 말한다. 오프셋 차이만 있으므로 차이가 없어야 하지만 휴일이 포함되거나 오프셋으로 인해 전체 조회 기간을 벗어날 경우 데이터가 없기 때문에 그만큼 거래일 수에서 차이를 보일 수 있다.
+상승일수 - 필터기간 거래일수 중에서 지수가 상승한 일수를 말한다.
+상승비율 - 상승일수 / 거래일수</p>
+<h2 id="끝내며">끝내며</h2>
+<p>이를 토대로 금리 인하 기간 전후로 나스닥, 가치주, 소형주에 유의미한 수익율 추이 변화를 느끼지는 못했다.
+일부 확연히 차이가 나는 기간이 있지만 통계 표본 부족에 의한 오차인지 시장의 끌림 현상인지 구분하기 어렵다.
+무엇보다도 언제 그러한 차이가 발생되는지 예측하는 것은 불가능에 가깝다.
+주식 시장의 근본적인 원리일지 단지 기계적인 리밸런싱 과정상의 이슈일지 판단하기란 더 어렵다.
+물론 필요한 경우 다른 인덱스 티커를 사용하여 다른 추정을 끌어낼 수도 있다.</p>
+<p>하지만 앞서 언급했지만 큰 의미 부여를 해서는 안된다.
+과거는 반복되지 않으며 과거는 단지 확률에서 현실에 벌어진 기록만 남겨졌다는 것을 기억하자.
+최소한 오늘날까지는 주식 분석 기술에서 멀티유니버스를 시뮬레이션할 방법은 없다.
+따라서 과거 분석을 통해 무작정 인과관계를 도출해서는 안된다. 퀀트와 마찬가지다.
+단지 금리 인하 기간을 전후로 어떠한 변동성을 가졌는지 정도가 근소하게 유의한 정보일 수 있다.</p>
+<p><strong><u>만일 인과관계 분석을 원하는 사람이 있다면 해당 기간 전후로 어떠한 뉴스가 있었는지도 검토해야 한다.</u></strong></p> </article>  </div> </div> </body></html>
